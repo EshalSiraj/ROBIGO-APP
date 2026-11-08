@@ -1,4 +1,7 @@
 
+import { C } from '@/lib/theme';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -9,10 +12,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { C } from '@/lib/theme';
 
 const ONBOARDING_KEY = 'robigo.onboarding.completed.v1';
 
@@ -216,7 +216,8 @@ export default function StartupFlow({ children }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={C.ivory} barStyle="dark-content" />
+   
+      <StatusBar barStyle="dark-content" />
 
       {stage === 'splash' ? (
         <View style={styles.splash}>

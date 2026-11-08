@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { Alert, Pressable, Text } from 'react-native';
-import { useRouter } from 'expo-router';
 import { AuthScreen, ErrorText, Field, PrimaryButton, SwitchLine } from '@/components/AuthUI';
 import { friendlyError, logIn, resetPassword } from '@/lib/auth';
 import { C } from '@/lib/theme';
-import BrandLogo from '@/components/BrandLogo';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Alert, Pressable, Text } from 'react-native';
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -19,7 +18,7 @@ export default function Login() {
     setBusy(true);
     try {
       await logIn(email, password);
-      router.replace('/');
+     router.replace('/(tabs)/classes');
     } catch (e) {
       setError(friendlyError(e));
     } finally {

@@ -10,13 +10,21 @@ export default function ScannerRoute() {
     assessment?: string;
   }>();
 
-  const navigation = {
+ /* const navigation = {
     replace: (screen: string) => {
       if (screen === 'Folders') {
         router.replace('/folders');
       }
     },
-  };
+  }; */
+
+  const navigation = {
+  replace: (screen: string) => {
+    if (screen === 'Folders') {
+      router.replace('/(tabs)/classes');
+    }
+  },
+};
 
   return (
     <ScannerScreen

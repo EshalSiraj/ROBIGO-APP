@@ -738,7 +738,9 @@ export default function ScannerScreen({
       onUpload={uploadPages}
       onCommand={handleVoiceCommand}
       onClose={() => setViewMode('scanner')}
-      onContinueToFolders={() => navigation.replace('Folders')}
+    onContinueToFolders={() => navigation.replace('Folders')}
+    // onContinueToFolders={() => navigation.replace('Home')}
+
     />
   );
 }

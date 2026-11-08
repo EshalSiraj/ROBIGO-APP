@@ -1,18 +1,18 @@
-import React, { useMemo, useState } from 'react';
+import { Button, Rule } from '@/components/ui';
+import { markSynced, saveClassLocal } from '@/lib/classes';
+import { N8N_BASE } from '@/lib/config';
+import { loadProfile } from '@/lib/profile';
+import { C, FONT, T } from '@/lib/theme';
+import { Ionicons } from '@expo/vector-icons';
+import * as DocumentPicker from 'expo-document-picker';
+import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import {
   Alert, KeyboardAvoidingView, Platform, Pressable,
   ScrollView, StyleSheet, Text, TextInput, View, type TextInputProps,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import * as DocumentPicker from 'expo-document-picker';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as XLSX from 'xlsx';
-import { N8N_BASE } from '@/lib/config';
-import { loadProfile } from '@/lib/profile';
-import { saveClassLocal, markSynced } from '@/lib/classes';
-import { Ionicons } from '@expo/vector-icons';
-import { C, FONT, T } from '@/lib/theme';
-import { Button, Rule } from '@/components/ui';
 
 // ---------------------------------------------------------------- types and small helpers
 type Student = { sap_id: string; name: string };
@@ -138,6 +138,7 @@ function blobToBase64(blob: Blob): Promise<string> {
 // ---------------------------------------------------------------- the screen
 export default function AddClass() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [fileName, setFileName] = useState('');
   const [parsed, setParsed] = useState<Parsed | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -255,7 +256,11 @@ export default function AddClass() {
   return (
     <SafeAreaView style={s.safe}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={s.body} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView
+  contentContainerStyle={[s.body, { paddingBottom: insets.bottom + 24 }]}
+  keyboardShouldPersistTaps="handled"
+  showsVerticalScrollIndicator={false}
+>
           <Pressable onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} hitSlop={10} style={s.back}>
             <Ionicons name="chevron-back" size={18} color={C.plum} />
             <Text style={s.backText}>Back</Text>
@@ -360,7 +365,11 @@ function BoxField({ label, last, ...rest }: TextInputProps & { label: string; la
 
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: C.ivory },
-  body: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 48 },
+ body: {
+  paddingHorizontal: 20,
+  paddingTop: 14,
+  paddingBottom: 48,
+},
   back: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', marginBottom: 10 },
   backText: { fontSize: 15, fontWeight: '600', color: C.plum },
   title: { ...T.h1, fontSize: 32, lineHeight: 38 },
